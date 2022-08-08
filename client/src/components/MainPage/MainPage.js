@@ -12,7 +12,7 @@ import "./MainPage.css"
 
 function MainPage() {
 
-  const ENDPOINT = 'http://localhost:5000';
+  const ENDPOINT = 'http://139.162.146.250:5000';
 
   const dispatch =useDispatch();
   const room =useSelector(state => state.room);

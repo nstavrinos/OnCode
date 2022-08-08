@@ -9,7 +9,7 @@ import TrashCan from '../FileTree/images/red-trash-can.png';
 import "./ChooseProject.css"
 
 function  ChooseProject() {
-    const ENDPOINT = 'http://localhost:5000';
+    const ENDPOINT = 'http://139.162.146.250:5000';
 
     const [project_modal, setProjectModal] = useState(false);
     const [proj_dropdown,setProjDropdown]=useState(false);

@@ -13,7 +13,7 @@ import "./Github.css"
 
 function  Github() {
 
-    const ENDPOINT = 'http://localhost:5000';
+    const ENDPOINT = 'http://139.162.146.250:5000';
 
     const [github_modal, setCollabModal] = useState(false);
     const [clone_form, setCloneForm] = useState(true);

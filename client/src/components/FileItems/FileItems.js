@@ -7,14 +7,12 @@ export default class FileItem extends React.Component{
         this.name=name;
         this.isDirectory=isDirectory;
         this.path=path;
-      //  this.parent=parent;
         if(isDirectory){
             this.children = [];
         }
 
         this.addItem = this.addItem.bind(this);
         this.rename=this.rename.bind(this);
-        //this.delete = this.delete.bind(this);
     }
 
 
@@ -55,13 +53,5 @@ export default class FileItem extends React.Component{
         }
        
     }
-    
- //   delete() {
-        
-     //   if(this.parent !== null){
-     //       this.parent.children = this.parent.children.filter(i => i.name !== this.name);
-     //   }
- 
- //   }
 
 }
