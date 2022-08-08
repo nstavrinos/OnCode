@@ -14,7 +14,7 @@ const EMAIL_REGEX = /^(?=.*[A-z])(?=.*[@])(?=.*[.]).{7,40}$/;
 
 function SignIn() {
 
-    const ENDPOINT = 'http://139.162.146.250:5000/api';
+    const ENDPOINT = 'http://139.162.146.250/api';
 
     const errRef = useRef();
     const [sign_modal, setSignModal] = useState(false);

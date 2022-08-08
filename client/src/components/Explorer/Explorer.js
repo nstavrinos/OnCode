@@ -16,7 +16,7 @@ import './Explorer.css';
 
 export default function Files() {
 
-  const ENDPOINT = 'http://139.162.146.250:5000/api';
+  const ENDPOINT = 'http://139.162.146.250/api';
 
   const dispatch =useDispatch();
   const inputFile = useRef(null);

@@ -25,7 +25,7 @@ dotenv.config();
 const client_id = process.env.GITHUB_CLIENT_ID;
 const client_secret = process.env.GITHUB_CLIENT_SECRET;
 
-const ENDPOINT = 'http://139.162.146.250:5000/api';
+const ENDPOINT = 'http://139.162.146.250/api';
 const CLIENT_URL ="http://139.162.146.250/";
 
 const transporter = nodemailer.createTransport({

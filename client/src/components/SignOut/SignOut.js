@@ -7,7 +7,7 @@ import Axios  from "axios";
 
 function SignOut() {
 
-    const ENDPOINT = 'http://139.162.146.250:5000/api';
+    const ENDPOINT = 'http://139.162.146.250/api';
 
     const dispatch = useDispatch();
     const loggedIn = useSelector(state => state.loggedIn);

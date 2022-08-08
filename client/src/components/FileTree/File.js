@@ -31,7 +31,7 @@ function deleteF(valFiles,path) {
 	});
 }
 
-const ENDPOINT = 'http://139.162.146.250:5000/api';
+const ENDPOINT = 'http://139.162.146.250/api';
 
 class File extends React.Component {
 
