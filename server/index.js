@@ -16,7 +16,7 @@ const saltRounds = 10;
 const app = express();
 const server = http.createServer(app);
 
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 app.use(express.json({limit: '50mb'}));
 app.use(express.urlencoded({limit: '50mb',extended: true }));
 app.use(cors());
@@ -25,7 +25,7 @@ dotenv.config();
 const client_id = process.env.GITHUB_CLIENT_ID;
 const client_secret = process.env.GITHUB_CLIENT_SECRET;
 
-const ENDPOINT = 'http://139.162.146.250:5000/';
+const ENDPOINT = 'http://139.162.146.250:5000/api';
 const CLIENT_URL ="http://139.162.146.250/";
 
 const transporter = nodemailer.createTransport({
@@ -137,7 +137,7 @@ io.on('connection', (socket) => {
 });
 
 
-app.get('/confirmation/:id',async(req, res) => {
+app.get('/api/confirmation/:id',async(req, res) => {
     try {
 
       User.findByIdAndUpdate( req.params.id, { confirmed: true },{new:true})
@@ -150,7 +150,7 @@ app.get('/confirmation/:id',async(req, res) => {
    return res.redirect(CLIENT_URL);
   });
 
-app.post('/SignIn', (req,res)=>{
+app.post('/api/SignIn', (req,res)=>{
     const username=req.body.username;
     const password=req.body.password;
 
@@ -189,7 +189,7 @@ app.post('/SignIn', (req,res)=>{
     });
 });
 
-app.post('/SignUp', (req,res)=>{
+app.post('/api/SignUp', (req,res)=>{
     const username=req.body.username;
     const password=req.body.password;
     const email=req.body.email;
@@ -250,7 +250,7 @@ app.post('/SignUp', (req,res)=>{
     
 });
 
-app.post('/SignOut', (req,res)=>{
+app.post('/api/SignOut', (req,res)=>{
 
     User.findOneAndUpdate({username: req.body.username},{previous_project: req.body.previous_project},(error, result)=> {  
           
@@ -267,7 +267,7 @@ app.post('/SignOut', (req,res)=>{
 });
 
 
-app.post('/CreateFolder', (req,res)=>{
+app.post('/api/CreateFolder', (req,res)=>{
    
     const folderpath= "/Projects/"+ req.body.username + "/" + req.body.path;
 
@@ -289,7 +289,7 @@ app.post('/CreateFolder', (req,res)=>{
 });
 
 
-app.post('/CreateFile', (req,res)=>{
+app.post('/api/CreateFile', (req,res)=>{
    
     const filepath= "/Projects/"+ req.body.username + "/" + req.body.path;
     fs.writeFileSync(path.join(__dirname,filepath),req.body.content);
@@ -329,7 +329,7 @@ const addFilesFromDirectoryToZip = async(directoryPath,originalpath, zip) => {
     return zipAsBase64;
   };
 
-  app.post('/ZipDownload', async(req,res)=>{
+  app.post('/api/ZipDownload', async(req,res)=>{
 
     const filepath= "/Projects/"+ req.body.username + "/" + req.body.path;
 
@@ -384,7 +384,7 @@ const fct = async (zip_path, folder_path,res) =>{
     res.send({newfiles: newfiles});
 }
 
-app.post('/ZipUpload', (req,res)=>{
+app.post('/api/ZipUpload', (req,res)=>{
    
     const filepath= "/Projects/"+ req.body.username + "/" + req.body.path;
 
@@ -398,7 +398,7 @@ app.post('/ZipUpload', (req,res)=>{
 
 });
 
-app.post('/GetContent', (req,res)=>{
+app.post('/api/GetContent', (req,res)=>{
    
     const filepath= "/Projects/"+ req.body.username + "/" + req.body.path;
     var data = fs.readFileSync(path.join(__dirname,filepath),"utf-8");
@@ -406,7 +406,7 @@ app.post('/GetContent', (req,res)=>{
 
 });
 
-app.post('/Rename', (req,res)=>{
+app.post('/api/Rename', (req,res)=>{
    
     const oldfilepath= "/Projects/"+ req.body.username + "/" + req.body.oldpath;
     const newfilepath= "/Projects/"+ req.body.username + "/" + req.body.newpath;
@@ -534,12 +534,12 @@ async function repo (req,res){
 
 }
 
-app.post('/CloneRepo', (req,res)=>{  
+app.post('/api/CloneRepo', (req,res)=>{  
     repo(req,res) ;
 });
 
 
-app.post('/PushRepo',async (req,res)=>{  
+app.post('/api/PushRepo',async (req,res)=>{  
     const currentpath= "/Projects/"+ req.body.username + "/" + req.body.path;
      
     const git = simpleGit({ baseDir: path.join(__dirname,currentpath) });
@@ -595,7 +595,7 @@ app.post('/PushRepo',async (req,res)=>{
 
 });
 
-app.post('/DeleteFile', (req,res)=>{
+app.post('/api/DeleteFile', (req,res)=>{
    
     const filepath= "/Projects/"+ req.body.username + "/" + req.body.path;
 
@@ -610,7 +610,7 @@ app.post('/DeleteFile', (req,res)=>{
     
 });
 
-app.post('/DeleteFolder', (req,res)=>{
+app.post('/api/DeleteFolder', (req,res)=>{
    
     const filepath= "/Projects/"+ req.body.username + "/" + req.body.path;
 
@@ -650,7 +650,7 @@ async function getAccessToken({ code, client_id, client_secret }) {
     return await request.data;
   }
 
-app.post("/GitSignIn", async (req, res) => {
+app.post("/api/GitSignIn", async (req, res) => {
     
     const code = req.body.code;
     const access_token = await getAccessToken({ code, client_id, client_secret });
@@ -748,7 +748,7 @@ app.post("/GitSignIn", async (req, res) => {
     }
   });
 
-  app.post("/ConnectGit", async (req, res) => {
+  app.post("/api/ConnectGit", async (req, res) => {
     
     const code = req.body.code;
     const access_token = await getAccessToken({ code, client_id, client_secret });
@@ -785,7 +785,7 @@ app.post("/GitSignIn", async (req, res) => {
     }
   });
 
-  app.post("/GetPreviousProject", (req, res) => {
+  app.post("/api/GetPreviousProject", (req, res) => {
         
         User.findOne({username: req.body.username})
         .exec((error , user) => {
@@ -821,7 +821,7 @@ app.post("/GitSignIn", async (req, res) => {
     
   });
 
-  app.post("/NewEmptyProject", (req, res) => {
+  app.post("/api/NewEmptyProject", (req, res) => {
     console.log(req.body.username,req.body.project_name);
     User.findOne({username: req.body.username})
     .exec((error , user) => {
@@ -870,7 +870,7 @@ app.post("/GitSignIn", async (req, res) => {
 
 });
 
-app.post("/AllProject", (req, res) => {
+app.post("/api/AllProject", (req, res) => {
 
     const folderpath=path.join(__dirname, "/Projects/"+ req.body.username + "/myProject/");
     let projects=[];
@@ -894,7 +894,7 @@ app.post("/AllProject", (req, res) => {
      
 });
 
-app.post("/OneProject", (req, res) => {
+app.post("/api/OneProject", (req, res) => {
 
     const currentpath="/Projects/"+ req.body.username + "/myProject/"+ req.body.project;
     repo_files= [];
@@ -910,7 +910,7 @@ app.post("/OneProject", (req, res) => {
 
 });
 
-app.post('/SaveCurrentProject', (req,res)=>{
+app.post('/api/SaveCurrentProject', (req,res)=>{
 
     User.findOneAndUpdate({username: req.body.username},{previous_project: req.body.previous_project},(error, result)=> {  
           
@@ -927,7 +927,7 @@ app.post('/SaveCurrentProject', (req,res)=>{
 });
 
 
-app.post("/DeleteProject", (req, res) => {
+app.post("/api/DeleteProject", (req, res) => {
 
     const currentpath="/Projects/"+ req.body.username + "/myProject/"+ req.body.project;
 

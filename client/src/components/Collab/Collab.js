@@ -9,7 +9,7 @@ import FileItem from '../FileItems/FileItems';
 import Close from '../FileTree/images/purple_close.png';
 import Axios  from "axios";
 
-const ENDPOINT = 'http://139.162.146.250:5000';
+const ENDPOINT = 'http://139.162.146.250:5000/api';
 var socketio = io(ENDPOINT);
 
 function Collab() {

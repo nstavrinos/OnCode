@@ -20,7 +20,7 @@ function deleteF(valFiles,path) {
 	});
 }
 
-const ENDPOINT = 'http://139.162.146.250:5000';
+const ENDPOINT = 'http://139.162.146.250:5000/api';
 
 class Folder extends React.Component {
 
